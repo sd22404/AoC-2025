@@ -1,33 +1,30 @@
-#include <fstream>
 #include <string>
 #include <iostream>
 
 using namespace std;
 
 int main() {
-	ifstream file("inputs.txt");
 	string line;
 
 	int pos = 50;
-	int pwd = 0;
+	int pwdOne = 0;
+	int pwdTwo = 0;
 
-	while (getline(file, line)) {
+	while (getline(cin, line)) {
 		bool left = line.at(0) == 'L';
 		int dist = stoi(line.substr(1));
+
 		int newPos = left ? pos - dist : pos + dist;
+		int wraps = left ? -newPos / 100 : newPos / 100;
+		wraps += left && (pos > 0) && (newPos <= 0);
 
-		// if (left) {
-		// 	int spins = -newPos / 100;
-		// 	pwd += newPos <= 0 ? spins + 1 : 0;
-		// } else {
-		// 	int spins = newPos / 100;
-		// 	pwd += newPos >= 100 ? spins : 0;
-		// }
-
+		pwdTwo += wraps;
 		pos = ((newPos % 100) + 100) % 100;
-		pwd += pos == 0;
+		
+		if (pos == 0) pwdOne++;
 	}
 
-	cout << pwd << endl;
+	cout << pwdOne << endl;
+	cout << pwdTwo << endl;
 	return 0;
 }
