@@ -1,4 +1,4 @@
-.vscode
+.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -9,4 +9,8 @@
 # Built Visual Studio Code Extensions
 *.vsix
 
-build
+# Ignore Executables
+*
+!/**/
+!*.*
+*.exe
