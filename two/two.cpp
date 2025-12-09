@@ -1,16 +1,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
-vector<string> split(const string &line, const char delim) {
+vector<string> split(const string &line, const string &delim) {
 	auto haystack = line;
 	vector<string> tokens;
 	size_t pos;
 	while ((pos = haystack.find(delim)) != string::npos) {
 		tokens.push_back(haystack.substr(0, pos));
-		haystack.erase(0, pos + 1);
+		haystack.erase(0, pos + delim.length());
 	}
 	tokens.push_back(haystack);
 	return tokens;
@@ -21,25 +22,38 @@ int main() {
 	string ranges;
 	getline(cin, ranges);
 
-	auto pairs = split(ranges, ',');
-	long sum = 0;
+	auto pairs = split(ranges, ",");
+	long sumOne = 0;
+	long sumTwo = 0;
+	bool foundTwo = false;
 
 	for (auto pair : pairs) {
-		auto range = split(pair, '-');
+		auto range = split(pair, "-");
 		long start = stol(range.at(0));
 		long end = stol(range.at(1));
 		for (long i = start; i <= end; i++) {
 			string id = to_string(i);
 			int len = id.size();
-			if (len < 2 || len % 2 != 0) continue;
-			string half = id.substr(0, len / 2);
-			string secondHalf = id.substr(len / 2, len / 2);
-			if (half == secondHalf) {
-				sum += i;
+			if (len < 2) continue;
+
+			foundTwo = false;
+
+			for (int testLen = 1; testLen <= len / 2; testLen++) {
+				string test = id.substr(0, testLen);
+				int testSize = test.size();
+				int count = 1;
+				for (int j = testSize; j < len; j += testSize) {
+					if (id.substr(j, testSize) == test) count++;
+				}
+				if (count == ceil(len / float(testSize))) {
+					if (!foundTwo) { sumTwo += i; foundTwo = true; }
+					if (testSize == ceil(len / 2.0)) { sumOne += i; break; }
+				}
 			}
 		}
 	}
 
-	cout << sum << endl;
+	cout << sumOne << endl;
+	cout << sumTwo << endl;
 	return 0;
 }
