@@ -9,10 +9,10 @@ int main() {
 	long joltsTwelve = 0;
 
 	while(getline(cin, bank)) {
-		int tens = -1;
-		int ones = -1;
+		char tens = -1;
+		char ones = -1;
 		for (int i = 0; i < bank.size(); i++) {
-			int joltage = static_cast<int>(bank.at(i) - '0');
+			char joltage = bank.at(i) - '0';
 			if (joltage > tens && i != bank.size() - 1) {
 				tens = joltage;
 				ones = -1;
@@ -27,6 +27,7 @@ int main() {
 	}
 
 	cout << joltsTwo << endl;
+	cout << joltsTwelve << endl;
 
 	return 0;
 }

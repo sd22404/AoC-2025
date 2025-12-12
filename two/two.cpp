@@ -40,14 +40,13 @@ int main() {
 
 			for (int testLen = 1; testLen <= len / 2; testLen++) {
 				string test = id.substr(0, testLen);
-				int testSize = test.size();
 				int count = 1;
-				for (int j = testSize; j < len; j += testSize) {
-					if (id.substr(j, testSize) == test) count++;
+				for (int j = testLen; j < len; j += testLen) {
+					if (id.substr(j, testLen) == test) count++;
 				}
-				if (count == ceil(len / float(testSize))) {
+				if (count == ceil(len / float(testLen))) {
 					if (!foundTwo) { sumTwo += i; foundTwo = true; }
-					if (testSize == ceil(len / 2.0)) { sumOne += i; break; }
+					if (testLen == ceil(len / 2.0)) { sumOne += i; break; }
 				}
 			}
 		}
